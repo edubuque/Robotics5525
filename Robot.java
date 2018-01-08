@@ -17,19 +17,21 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends IterativeRobot {
-	private DifferentialDrive m_myRobot;
+	private DifferentialDrive left_myRobot;
+	private DifferentialDrive right_myRobot;
+	private DifferentialDrive whole_myRobot;
 	private Joystick m_leftStick;
-	private Joystick m_rightStick;
 
 	@Override
 	public void robotInit() {
-		m_myRobot = new DifferentialDrive(new Spark(0), new Spark(1));
+		left_myRobot = new DifferentialDrive(new Talon(0),new Talon(2))
+		right_myRobot = new DifferentialDrive(new Talon(3), new Talon(4));
+		whole_myRobot = new DifferentialDrive(left_myRobot,right_myRobot);
 		m_leftStick = new Joystick(0);
-		m_rightStick = new Joystick(1);
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY());
+		whole_myRobot.tankDrive(m_leftStick.getY(3), m_leftStick.getY(4));
 	}
 }
